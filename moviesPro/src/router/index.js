@@ -7,12 +7,12 @@ import AboutView from '../views/AboutView.vue'
    routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: HomeView
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/movie/:id',
+      name: 'About Movie',
       component: AboutView
     }
   ]

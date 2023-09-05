@@ -1,39 +1,48 @@
 <template>
   <main>
-    <h1>Lastest Movies</h1>
+    <div class="image"></div>
     <div class="inputbut">
       <input v-model="search" type="search" name="" id="">
-      <button @click="getPosts">search</button>
+      <button @click="getMovies">search</button>
     </div>
-    <div>
-      <ul v-if="post.length">
-        <li v-for="movie in post" :key="movie.imdbID">
-          <img v-if="movie.Poster !== 'N/A'" :src="movie.Poster" alt="Movie Poster">
-          <div>
-            <h3>{{ movie.Title }}</h3>
-            <p>Year: {{ movie.Year }}</p>
-            <p>Plot: {{ movie.Plot }}</p>
+
+  
+
+    <div class="movies-list">
+      <div class="move" v-for="movie in movie" :key="movie.imdbID">
+        <router-link :to="'/movie/' + movie.imdbID" class="link-movie">
+          <div class="images">
+            <img :src="movie.Poster" alt="Movie Poster">
+            <div class="movie-type">{{ movie.Type }}</div>
           </div>
-        </li>
-      </ul>
+          <div>
+            <div class="movie-detail">
+              <h3>{{ movie.Title }}</h3>
+              <p>Year: {{ movie.Year }}</p>
+            </div>
+          </div>
+        </router-link>
+      </div>
     </div>
   </main>
 </template>
+
 
 <script setup>
 import { ref } from 'vue'
 
 const search = ref('')
-const post = ref([])
+const movie = ref([])
 
-const getPosts = () => {
+const getMovies = () => {
   if (search.value !== '') {
     fetch(`http://www.omdbapi.com/?apikey=4fc450c6&s=${search.value}`)
       .then(response => response.json())
-      .then(data => post.value = data.Search)
+      .then(data => movie.value = data.Search)
   }
 }
 </script>
+
 
 <style scoped>
 
